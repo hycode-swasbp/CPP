@@ -1,0 +1,39 @@
+//Added a new solution to problem https://leetcode.com/problems/course-schedule-ii/
+class Solution {
+public:
+   vector<int> findOrder(int numCourses, vector<vector<int>> &prerequisites1) {
+      vector<int>res;
+        vector<int>indegree(numCourses,0);
+        vector<vector<int>>prerequisites(numCourses);
+        for(auto i:prerequisites1){
+            prerequisites[i[1]].push_back(i[0]);
+        }
+        for(int i=0;i<numCourses;i++){
+            for(auto j:prerequisites[i]){
+                indegree[j]++;
+            }  
+        }
+    queue<int>q;
+    for(int i=0;i<numCourses;i++){
+        if(indegree[i]==0){
+            q.push(i);
+        }
+    }
+    while(!q.empty()){
+        int temp=q.front();
+        q.pop();
+        res.push_back(temp);
+        for(auto i:prerequisites[temp]){
+            indegree[i]--;
+            if(!indegree[i])
+                q.push(i);
+        }
+    }
+    if(res.size()==numCourses)
+    return res;
+    else{
+        vector<int>v;
+        return v;
+    }
+    }
+};
